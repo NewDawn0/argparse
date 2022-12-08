@@ -14,6 +14,7 @@
 
 //definitions
 #define red "\033[1;31m"
+#define green "\033[1;32m"
 #define reset "\033[0m"
 
 // use
@@ -22,7 +23,7 @@ using std::vector;
 using std::string;
 
 // parser contains
-int libargparse::ArgParser::contains(vector<string> targetVec, string item) {
+inline int libargparse::ArgParser::contains(vector<string> targetVec, string item) {
     auto res = std::find(targetVec.begin(), targetVec.end(), item);
     if (res != targetVec.end()) {
         return res - targetVec.begin();
@@ -150,4 +151,10 @@ void libargparse::ArgParser::overrideEvent(string event, void (*fnPtr)()) {
     if (contains(libargparse::ArgParser::eventTriggers, event) != -1) {
         events[event] = fnPtr;
     }
+}
+
+// parser help
+void libargparse::ArgParser::help() {
+    std::cout << green << "Visit 'https://github.com/NewDawn0/argparser' for the documentation" << reset << std::endl;
+    exit(0);
 }

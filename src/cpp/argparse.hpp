@@ -39,7 +39,7 @@ namespace libargparse {
             };
             // fn
             vector<pair<string, string>> container;
-            int contains(vector<string> targetVec, string item);
+            inline int contains(vector<string> targetVec, string item);
             void order();
         public:
             // vars
@@ -49,7 +49,7 @@ namespace libargparse {
             void addArg(string arg, bool reqNextArg = true, bool multipleAllowed = false);
             void parse(int argc, char *argv[], bool allowInvalidArguments = false, bool allowNoArguments = false);
             void overrideEvent(string event, void (*fnPtr)());
-            void help();
+            static void help();
     };
 }
 
