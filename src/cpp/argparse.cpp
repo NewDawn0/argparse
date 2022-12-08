@@ -71,17 +71,17 @@ void libargparse::ArgParser::addArg(string arg, bool reqNextArg, bool multipleAl
 void libargparse::ArgParser::parse(int argc, char *argv[], bool allowInvalidArguments, bool allowNoArguments) {
     if (argc == 1 && !allowNoArguments) {
         // Override default
-        if (libargparse::ArgParser::events["NoArguments"] != NULL) {
-            events["NoArguments"]();
+        if (libargparse::ArgParser::events["NoArgsErr"] != NULL) {
+            events["NoArgsErr"]();
         } else {
             // err out if no argument is listed and allow no arguments is listed as false
-            std::cerr << red << "ArgParse Error "<< reset << ArgParserNoArgErr << std::endl;
+            std::cerr << red << "ArgParse Error "<< reset << ARGPARSER_NO_ARG_ERR << std::endl;
             exit(1);
         }
     } else if (argc == 1) {
         // Override default
-        if (libargparse::ArgParser::events["AllowNoArguments"] != NULL) {
-            events["AllowNoArguments"]();
+        if (libargparse::ArgParser::events["AllowNoArgs"] != NULL) {
+            events["AllowNoArgs"]();
         }
     } else {
         int argIndex = 1;
@@ -105,22 +105,22 @@ void libargparse::ArgParser::parse(int argc, char *argv[], bool allowInvalidArgu
                             argIndex++;
                         } else {
                             // Override default
-                            if (libargparse::ArgParser::events["MissingArg"] != NULL) {
-                                events["MissingArg"]();
+                            if (libargparse::ArgParser::events["MissingArgErr"] != NULL) {
+                                events["MissingArgErr"]();
                             } else {
                                 // err if no next arg is found
-                                std::cerr << red << "ArgParse Error " << reset << ArgParserMissingArgErr << std::endl;
+                                std::cerr << red << "ArgParse Error " << reset << ARGPARSER_MISSING_ARG_ERR << std::endl;
                                 exit(1);
                             }
                         }
                     }
                 } else {
                     // Override default
-                    if (libargparse::ArgParser::events["MultiArg"] != NULL) {
-                        events["MultiArg"]();
+                    if (libargparse::ArgParser::events["MultiArgErr"] != NULL) {
+                        events["MultiArgErr"]();
                     } else {
                         // err if there are multiple of the same arg which is not allowed as default
-                        std::cerr << red << "ArgParse Error " << reset << ArgParserMultiArgErr << red << " \'" << reset << argv[argIndex] << red << "\'" << reset << std::endl; 
+                        std::cerr << red << "ArgParse Error " << reset << ARGPARSER_MULTI_ARG_ERR << red << " \'" << reset << argv[argIndex] << red << "\'" << reset << std::endl; 
                         exit(1);
                     }
                 }
@@ -128,10 +128,10 @@ void libargparse::ArgParser::parse(int argc, char *argv[], bool allowInvalidArgu
                 // err if invalid arguments aren't allowed
                 if (!allowInvalidArguments) {
                     // Override default
-                    if (libargparse::ArgParser::events["InvalidArg"] != NULL) {
-                        events["InvalidArg"]();
+                    if (libargparse::ArgParser::events["InvalidArgErr"] != NULL) {
+                        events["InvalidArgErr"]();
                     } else {
-                        std::cerr << red << "ArgParse Error " << reset << ArgParserInvalidArgErr <<red << " \'" << reset << argv[argIndex] << red << "\'" << reset << std::endl;
+                        std::cerr << red << "ArgParse Error " << reset << ARGPARSER_INVALID_ARG_ERR <<red << " \'" << reset << argv[argIndex] << red << "\'" << reset << std::endl;
                         exit(1);
                     }
                 }
@@ -145,7 +145,7 @@ void libargparse::ArgParser::parse(int argc, char *argv[], bool allowInvalidArgu
 }
 
 // addTrigger - Override default behaviour
-void libargparse::ArgParser::addTrigger(string event, void (*fnPtr)()) {
+void libargparse::ArgParser::overrideEvent(string event, void (*fnPtr)()) {
     // if event exist overwrite original behaviour
     if (contains(libargparse::ArgParser::eventTriggers, event) != -1) {
         events[event] = fnPtr;
