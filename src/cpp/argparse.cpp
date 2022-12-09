@@ -51,7 +51,7 @@ void libargparse::ArgParser::order() {
     }
     // remove duplicates of single arg options
     for (string &item : change) {
-        argtainer[item].resize(1) ;
+        argtainer[item].resize(1);
     }
 }
 
