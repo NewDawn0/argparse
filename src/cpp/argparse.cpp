@@ -43,17 +43,11 @@ void libargparse::ArgParser::order() {
         argtainer[std::get<0>(item)].push_back(std::get<1>(item));
     }
     // seach for unused args and dupliate options
-    vector<string> del, change;
+    vector<string> change;
     for (const auto &item : argtainer) {
-        if (item.second.empty()) {
-            del.push_back(item.first);
-        } else if (item.second[0].empty()) {
+        if (item.second[0].empty()) {
             change.push_back(item.first);
         }
-    }
-    // remove unused options
-    for (string &item : del) {
-        argtainer.erase(item);
     }
     // remove duplicates of single arg options
     for (string &item : change) {
