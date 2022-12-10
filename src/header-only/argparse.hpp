@@ -1,3 +1,15 @@
+///////////////////////////////////////////////////
+// Argparser - A simple argument parsing library //
+// Version: cpp header only                      //
+// Copyright: NewDawn0 (Tom) 10.12.2022          //
+// License: MIT                                  //
+///////////////////////////////////////////////////
+
+// header guard
+#ifndef ARGPARSE_HPP_HEADER_ONLY
+#define ARGPARSE_HPP_HEADER_ONLY
+
+// libs
 #include <map>
 #include <vector>
 #include <string>
@@ -8,12 +20,7 @@
 
 //definitions
 #define red "\033[1;31m"
-#define green "\033[1;32m"
 #define reset "\033[0m"
-#define ARGPARSER_NO_ARG_ERR "Provide at least one argument"
-#define ARGPARSER_MISSING_ARG_ERR "Provide an argument for this option"
-#define ARGPARSER_INVALID_ARG_ERR "Invalid argument"
-#define ARGPARSER_MULTI_ARG_ERR "This Argument can only be provided once"
 
 // ParserSettings
 typedef void (*fnRef)();
@@ -35,6 +42,7 @@ typedef struct ParserSettings {
     } eventFunctions;
 } ParserSettings;
 #undef fnRef
+
 // Argument Parser
 class ArgParser {
     private:
@@ -53,13 +61,9 @@ class ArgParser {
         void config(ParserSettings newParserSettings);
         void parse(int argc, char *argv[]);
         void addArg(std::string arg, bool multipleAllowed = false, bool requireNextArg = true);
-        void pprint();
 };
 
-// #undef
-
-/////////////////// argparse.cpp file ////////////////////////
-//////// Private /////////
+//// Private
 // print events
 inline void ArgParser::eprintln(std::string eventString, std::string flag) {
     std::cerr << red "ArgParse Error " << reset;
@@ -67,6 +71,7 @@ inline void ArgParser::eprintln(std::string eventString, std::string flag) {
     std::cerr << eventString << std::endl;
     exit(1);
 }
+
 // check if string is in vector
 inline int ArgParser::contains(std::vector<std::string> targetVec, std::string item) {
     auto res = std::find(targetVec.begin(), targetVec.end(), item);
@@ -76,7 +81,8 @@ inline int ArgParser::contains(std::vector<std::string> targetVec, std::string i
         return -1;
     }
 }
-//////// Public /////////
+
+//// Public
 // change defaults
 inline void ArgParser::config(ParserSettings newParserSettings) {
     ArgParser::parserSettings = newParserSettings;
@@ -87,6 +93,7 @@ inline void ArgParser::addArg(std::string arg, bool multipleAllowed, bool requir
     if (!requireNextArg) {ArgParser::noNext.push_back(arg);}
     ArgParser::argKeys.push_back(arg);
 }
+
 // parse arguments
 inline void ArgParser::parse(int argc, char *argv[]) {
     // if no args are found
@@ -166,9 +173,6 @@ inline void ArgParser::parse(int argc, char *argv[]) {
         }
     }
 }
-inline void ArgParser::pprint() {
-    std::cout << "Multi arg = [ ";
-    for (std::string &arg : ArgParser::multi) {
-        std::cout << arg << " ";
-    } std::cout << "]" << std::endl;
-}
+
+// header guard
+#endif
