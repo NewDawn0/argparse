@@ -50,7 +50,6 @@ class ArgParser {
         ParserSettings parserSettings;
         std::vector<std::string> argKeys, multi, multiCmp, noNext;
         // functions
-        void triggerEvent(std::string Event);
         void eprintln(std::string eventString, std::string flag = "");
         int contains(std::vector<std::string> targetVec, std::string item);
     public:

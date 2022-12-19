@@ -1,13 +1,13 @@
 ///////////////////////////////////////////////////
 // Argparser - A simple argument parsing library //
-// Version: cpp header only                      //
+// Version: cpp                                  //
 // Copyright: NewDawn0 (Tom) 10.12.2022          //
 // License: MIT                                  //
 ///////////////////////////////////////////////////
 
 // header guard
-#ifndef ARGPARSE_HPP_HEADER_ONLY
-#define ARGPARSE_HPP_HEADER_ONLY
+#ifndef ARGPARSE_HPP
+#define ARGPARSE_HPP
 
 // libs
 #include <map>
@@ -50,7 +50,6 @@ class ArgParser {
         ParserSettings parserSettings;
         std::vector<std::string> argKeys, multi, multiCmp, noNext;
         // functions
-        void triggerEvent(std::string Event);
         void eprintln(std::string eventString, std::string flag = "");
         int contains(std::vector<std::string> targetVec, std::string item);
     public:
