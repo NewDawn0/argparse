@@ -16,6 +16,7 @@
 #include <utility>
 #include <cstdlib>
 #include <iterator>
+#include <stdint.h>
 #include <iostream>
 
 //definitions
@@ -51,7 +52,7 @@ class ArgParser {
         std::vector<std::string> argKeys, multi, multiCmp, noNext;
         // functions
         void eprintln(std::string eventString, std::string flag = "");
-        int contains(std::vector<std::string> targetVec, std::string item);
+        int32_t contains(std::vector<std::string> targetVec, std::string item);
     public:
         // vars
         std::vector<std::string> otherArgs;
@@ -72,7 +73,7 @@ inline void ArgParser::eprintln(std::string eventString, std::string flag) {
 }
 
 // check if string is in vector
-inline int ArgParser::contains(std::vector<std::string> targetVec, std::string item) {
+inline int32_t ArgParser::contains(std::vector<std::string> targetVec, std::string item) {
     auto res = std::find(targetVec.begin(), targetVec.end(), item);
     if (res != targetVec.end()) {
         return res - targetVec.begin();
@@ -112,10 +113,10 @@ inline void ArgParser::parse(int argc, char *argv[]) {
     // if there are arguments
     } else {
         // loop over argumetns except first
-        int argIndex = 1;
+        int32_t argIndex = 1;
         while (argIndex < argc) {
             // check if its actually an argument
-            int argKeysIndex = ArgParser::contains(ArgParser::argKeys, argv[argIndex]);
+            int32_t argKeysIndex = ArgParser::contains(ArgParser::argKeys, argv[argIndex]);
             // invalid arg
             if (argKeysIndex == -1) {
                 // fn event if configured else run default error
